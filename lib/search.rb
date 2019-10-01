@@ -1,36 +1,37 @@
-require 'rest-client'
-require 'json'
+# require 'rest-client'
+# require 'json'
 # require 'pry'
-require_relative '../lib/oauth.rb'
+# require_relative '../config/key.rb'
+
 # require_relative '../app/models/artist.rb'
 
-def get_artist_id(name)
-    rest_client = RestClient.get("https://api.spotify.com/v1/search?q=#{name}&type=artist",
-    'Authorization' => "Bearer #{GetData.access_token}")
-    response = JSON.parse(rest_client)  
+# def get_artist_id(name)
+#     rest_client = RestClient.get("https://api.spotify.com/v1/search?q=#{name}&type=artist",
+#     'Authorization' => "Bearer #{GetData.access_token}")
+#     response = JSON.parse(rest_client)  
 
-    artist_id = response["artists"]["items"].map do |item|
-        item["id"]
-    end.first
-    artist_id
-end
+#     artist_id = response["artists"]["items"].map do |item|
+#         item["id"]
+#     end.first
+#     artist_id
+# end
 
-# binding.pry
+# # binding.pry
 
-def find_albums(artist)
+# def find_albums(artist)
     
-    artist_id = get_artist_id(artist)
+#     artist_id = get_artist_id(artist)
 
-    rest_client = RestClient.get("https://api.spotify.com/v1/artists/#{artist_id}/albums?limit=10",
-    'Authorization' => "Bearer #{GetData.access_token}")
-    response = JSON.parse(rest_client)  
+#     rest_client = RestClient.get("https://api.spotify.com/v1/artists/#{artist_id}/albums?limit=10",
+#     'Authorization' => "Bearer #{GetData.access_token}")
+#     response = JSON.parse(rest_client)  
 
-    albums = response["items"].map do |item|
-        name = item["name"]
-    end.uniq
-    albums  
+#     albums = response["items"].map do |item|
+#         name = item["name"]
+#     end.uniq
+#     albums  
     
-end
+# end
 
 # binding.pry
 # def get_artist_albums(artist_name)
@@ -48,29 +49,30 @@ end
 #     # binding.pry
 # end
 
-def find_artist(artist_name)
-    artist_id = get_artist_id(artist_name)
+# def find_artist(artist_name)
+#     artist_id = get_artist_id(artist_name)
 
-    rest_client = RestClient.get("https://api.spotify.com/v1/artists/#{artist_id}",
-    # rest_client = RestClient.get("https://api.spotify.com/v1/artists/3jOstUTkEu2JkjvRdBA5Gu",
-    'Authorization' => "Bearer #{GetData.access_token}")
-    response = JSON.parse(rest_client)  
+#     rest_client = RestClient.get("https://api.spotify.com/v1/artists/#{artist_id}",
+#     # rest_client = RestClient.get("https://api.spotify.com/v1/artists/3jOstUTkEu2JkjvRdBA5Gu",
+#     'Authorization' => "Bearer #{GetData.access_token}")
+#     response = JSON.parse(rest_client)  
 
-    # response.each do |artist|
-    #     Artist.create(
-    #         name: artist["name"],
-    #         followers: artist["followers"]["total"],
-    #         genre: artist["genres"],
-    #         spotify_id: artist["id"]
-    #     )
-    # end
-    # binding.pry
-end
+#     # response.each do |artist|
+#     #     Artist.create(
+#     #         name: artist["name"],
+#     #         followers: artist["followers"]["total"],
+#     #         genre: artist["genres"],
+#     #         spotify_id: artist["id"]
+#     #     )
+#     # end
+#     # binding.pry
+# end
 
-# binding.pry
+# # binding.pry
 
-get_artist_albums("Weezer")
-find_artist("Beatles")
-# binding.pry
+# get_artist_albums("Weezer")
+# find_artist("Beatles")
+# # binding.pry
 
-# binding.pry
+# # binding.pry
+

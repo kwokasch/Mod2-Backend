@@ -11,9 +11,6 @@ class ArtistsController < ApplicationController
     def show 
         @artist = Artist.find(params[:id])
 
-        # spotify_artist_id = get_artist_id(params[:name])
-        # find_artist(spotify_artist_id)
-
         render json: @artist
     end
 
