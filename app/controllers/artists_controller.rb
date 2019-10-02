@@ -28,7 +28,7 @@ class ArtistsController < ApplicationController
             spotify_id: response["id"],
             image: response["images"][0]["url"]
         })
-        
+        redirect_to "http://localhost:3001" 
     end
 
     def get_spotify_id(name)

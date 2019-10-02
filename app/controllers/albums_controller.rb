@@ -27,7 +27,7 @@ class AlbumsController < ApplicationController
             songs: response["tracks"],
             spotify_id: response["id"]
         })
-
+        redirect_to "http://localhost:3001"
     end
     
     def get_spotify_id(album_name)
