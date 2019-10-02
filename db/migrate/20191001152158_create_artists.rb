@@ -5,6 +5,7 @@ class CreateArtists < ActiveRecord::Migration[6.0]
       t.integer :followers
       t.string :genre
       t.string :spotify_id
+      t.string :image
 
       t.timestamps
     end

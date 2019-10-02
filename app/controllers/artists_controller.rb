@@ -5,7 +5,6 @@ class ArtistsController < ApplicationController
         @artists = Artist.all 
 
         render json: @artists 
-        # include: :album
     end
 
     def show 
@@ -22,14 +21,14 @@ class ArtistsController < ApplicationController
         'Authorization' => "Bearer #{get_token}")
         response = JSON.parse(rest_client)  
 
-        # byebug
-
         @artist = Artist.create({
             name: response["name"], 
             followers: response["followers"]["total"],
             genre: response["genres"],
-            spotify_id: response["id"]
+            spotify_id: response["id"],
+            image: response["images"][0]["url"]
         })
+        
     end
 
     def get_spotify_id(name)

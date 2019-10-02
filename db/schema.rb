@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2019_10_01_152434) do
     t.integer "followers"
     t.string "genre"
     t.string "spotify_id"
+    t.string "image"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -14,7 +14,7 @@ class AlbumsController < ApplicationController
     end
 
     def create    
-        
+
         spot_id = get_spotify_id(params[:name])
     
         rest_client = RestClient.get("https://api.spotify.com/v1/albums/#{spot_id}",
@@ -31,6 +31,7 @@ class AlbumsController < ApplicationController
     end
     
     def get_spotify_id(album_name)
+        
         rest_client = RestClient.get("https://api.spotify.com/v1/search?q=#{album_name}&type=album",
         'Authorization' => "Bearer #{get_token}")
         response = JSON.parse(rest_client)  
