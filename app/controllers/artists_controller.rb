@@ -21,13 +21,20 @@ class ArtistsController < ApplicationController
         'Authorization' => "Bearer #{get_token}")
         response = JSON.parse(rest_client)  
 
-        @artist = Artist.create({
-            name: response["name"], 
-            followers: response["followers"]["total"],
-            genre: response["genres"],
-            spotify_id: response["id"],
-            image: response["images"][0]["url"]
-        })
+        artist_exists = Artist.all.any? {|artist| artist["name"] == response["name"]} 
+        
+        if artist_exists == true
+            puts "Artist already exists"
+        else 
+            @artist = Artist.create({
+                name: response["name"], 
+                followers: response["followers"]["total"],
+                genre: response["genres"],
+                spotify_id: response["id"],
+                image: response["images"][0]["url"]
+            })
+        end
+    
         redirect_to "http://localhost:3001" 
     end
 
@@ -52,5 +59,5 @@ class ArtistsController < ApplicationController
         JSON.parse(token)['access_token']
         # end
     end
-    
+ 
 end
