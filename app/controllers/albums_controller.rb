@@ -21,12 +21,19 @@ class AlbumsController < ApplicationController
         'Authorization' => "Bearer #{get_token}")
         response = JSON.parse(rest_client)  
     
-        @album = Album.create({
+        album_exists = Album.all.any? {|album| album["name"] == response["name"]} 
+        
+        if album_exists == true
+            puts "Album already exists"
+        else 
+            @album = Album.create({
             name: response["name"], 
             genre: response["genres"],
             songs: response["tracks"],
             spotify_id: response["id"]
-        })
+            })
+        end
+        
         redirect_to "http://localhost:3001"
     end
     
