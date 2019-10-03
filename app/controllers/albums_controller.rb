@@ -25,12 +25,13 @@ class AlbumsController < ApplicationController
         
         if album_exists == true
             puts "Album already exists"
-        else 
+        else
             @album = Album.create({
             name: response["name"], 
-            genre: response["genres"],
-            songs: response["tracks"],
-            spotify_id: response["id"]
+            musicians: response["artists"].map{|artist| artist["name"]},
+            songs: response["tracks"]["items"].map{|track| track["name"]},
+            spotify_id: response["id"],
+            image: response["images"][0]["url"]
             })
         end
         
