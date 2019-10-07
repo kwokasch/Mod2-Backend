@@ -5,7 +5,6 @@ class ArtistsController < ApplicationController
         @artists = Artist.all 
 
         render json: @artists 
-        # include: :album
     end
 
     def show 
@@ -22,14 +21,21 @@ class ArtistsController < ApplicationController
         'Authorization' => "Bearer #{get_token}")
         response = JSON.parse(rest_client)  
 
-        # byebug
-
-        @artist = Artist.create({
-            name: response["name"], 
-            followers: response["followers"]["total"],
-            genre: response["genres"],
-            spotify_id: response["id"]
-        })
+        artist_exists = Artist.all.any? {|artist| artist["name"] == response["name"]} 
+        
+        if artist_exists == true
+            puts "Artist already exists"
+        else 
+            @artist = Artist.create({
+                name: response["name"], 
+                followers: response["followers"]["total"],
+                genre: response["genres"],
+                spotify_id: response["id"],
+                image: response["images"][0]["url"]
+            })
+        end
+    
+        redirect_to "http://localhost:3001" 
     end
 
     def get_spotify_id(name)
@@ -53,5 +59,5 @@ class ArtistsController < ApplicationController
         JSON.parse(token)['access_token']
         # end
     end
-    
+ 
 end

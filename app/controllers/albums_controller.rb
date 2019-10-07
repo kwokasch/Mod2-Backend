@@ -14,23 +14,32 @@ class AlbumsController < ApplicationController
     end
 
     def create    
-        
+
         spot_id = get_spotify_id(params[:name])
     
         rest_client = RestClient.get("https://api.spotify.com/v1/albums/#{spot_id}",
         'Authorization' => "Bearer #{get_token}")
         response = JSON.parse(rest_client)  
     
-        @album = Album.create({
+        album_exists = Album.all.any? {|album| album["name"] == response["name"]} 
+        
+        if album_exists == true
+            puts "Album already exists"
+        else
+            @album = Album.create({
             name: response["name"], 
-            genre: response["genres"],
-            songs: response["tracks"],
-            spotify_id: response["id"]
-        })
-
+            musicians: response["artists"].map{|artist| artist["name"]},
+            songs: response["tracks"]["items"].map{|track| track["name"]},
+            spotify_id: response["id"],
+            image: response["images"][0]["url"]
+            })
+        end
+        
+        redirect_to "http://localhost:3001"
     end
     
     def get_spotify_id(album_name)
+        
         rest_client = RestClient.get("https://api.spotify.com/v1/search?q=#{album_name}&type=album",
         'Authorization' => "Bearer #{get_token}")
         response = JSON.parse(rest_client)  
